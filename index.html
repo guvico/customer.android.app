@@ -14,7 +14,23 @@
 
     function directURL(event) {
       event.preventDefault();
-
+        var userAgent = window.navigator.userAgent,
+            platform = window.navigator.platform,
+            macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+            windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+            iosPlatforms = ['iPhone', 'iPad', 'iPod'],
+            os = null;
+        if (macosPlatforms.indexOf(platform) !== -1) {
+            os = 'Mac OS';
+        } else if (iosPlatforms.indexOf(platform) !== -1) {
+            os = 'iOS';
+        } else if (windowsPlatforms.indexOf(platform) !== -1) {
+            os = 'Windows';
+        } else if (/Android/.test(userAgent)) {
+            os = 'Android';
+        } else if (!os && /Linux/.test(platform)) {
+            os = 'Linux';
+        }
 
       const token = window.screen.availWidth.toString() +
         window.screen.availHeight.toString() +
@@ -37,11 +53,15 @@
 
       let typeDirect = getParameterByName('options') || "store";
 
-      if(typeDirect === "Vupev3finZMrCK9a5tJ0Du") {
+      if (os === 'Android') {
+        if(typeDirect === "Vupev3finZMrCK9a5tJ0Du") {
           window.location.assign('https://play.google.com/store/apps/details?id=com.guvico_customer').target = "_top";
         } else {
           window.location.assign('market://details?id=com.guvico_customer').target = "_top";
         }
+      } else {
+        window.location.assign(`https://play.google.com/store/apps/details?id=com.guvico_customer`).target = "_top";
+      }
       // Vupev3finZMrCK9a5tJ0Du co nghia la direct qua web, viet tam bay nhu the de nguoi khac k doan ra thoi =))))
     }
 
